@@ -6,20 +6,20 @@ const assert = require('assert');
 const url = 'mongodb://localhost:27017';
 
 // Database Name
-const dbName = 'student_requests';
-const collectionName = 'requests'
+const dbName = 'shuttershop';
+const collectionName = 'orders';
 // Create a new MongoClient
 
 /* Mongo DB Ends*/
 
-function readRequests(findParams, callback){
+function readOrders(findParams, callback){
     var client = new MongoClient(url);
     client.connect((err)=>{
         assert.equal(null, err);
         //console.log("Connected successfully to server");
 
         const db = client.db(dbName);
-        const collection= db.collection(collectionName)
+        const collection= db.collection(collectionName);
 
         collection.find(findParams).toArray(function(err, docs) {
             assert.equal(err, null);
@@ -29,12 +29,12 @@ function readRequests(findParams, callback){
     })
 }
 
-function readAllRequests(callback){
-    readRequests({},(result) => {callback(result)})
+function readAllOrders(callback){
+    readOrders({},(result) => {callback(result)})
 }
 
-function readRequestsOfStudent(studentId,callback){
-    readRequests({"student.studentId" : studentId},(result) => {callback(result)})
+function readOrdersByCustomerId(customerId,callback){
+    readOrders({"order.customerId" : customerId},(result) => {callback(result)})
 }
 
 function createRequest(request,callback){
@@ -44,7 +44,7 @@ function createRequest(request,callback){
         //console.log("Connected successfully to server");
 
         const db = client.db(dbName);
-        const collection= db.collection(collectionName)
+        const collection= db.collection(collectionName);
 
         collection.insertOne(request,(err,r)=>{
             assert.equal(null, err);
@@ -58,6 +58,6 @@ function createRequest(request,callback){
 
 module.exports = {
     "createRequest" : createRequest,
-    "readRequests" : readAllRequests,
-    "readRequestsOfStudent" : readRequestsOfStudent
+    "listAllOrders" : readAllOrders,
+    "listOrdersByCustomerId" : readOrdersByCustomerId
 }

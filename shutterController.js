@@ -1,21 +1,21 @@
 var express = require('express');
 var router = express.Router();
 
-var srs = require('./shutterRequestService')
-const shutterRequestService = new srs()
+var srs = require('./shutterService');
+const shutterService = new srs();
 
-router.get('/listOrders',(req,res) =>{
-    if(req.query['studentId'] !== undefined){
-
-        shutterRequestService.listRequestsOfOrder(req.query['studentId'], (requests)=>{
-            res.status(200).send(requests)
-        })
-        return;
-    }
-    shutterRequestService.listRequests((requests) =>{
+//customerId alapjan
+router.get('/listOrders/:customerId',(req,res) =>{
+    shutterService.listOrdersByCustomerId(req.params.customerId, (requests)=>{
         res.status(200).send(requests)
-    })
-})
+})});
+
+//mindet
+router.get('/listOrders',(req,res) =>{
+    shutterService.listAllOrders((requests) =>{
+        res.status(200).send(requests)
+})});
+
 
 router.post('/placeOrder', (req,res) =>{
     if(req.body['order'] === undefined){
@@ -38,11 +38,11 @@ router.post('/placeOrder', (req,res) =>{
         res.status(414).send("window width must be defined");
         return;
     }
-    shutterRequestService.submitRequest(
+    shutterService.submitRequest(
         {order : req.body['order']},
         () => {res.status(200).send("Request recorded")},
         (cause) => {res.status(400).send(cause)}
         )
-})
+});
 
 module.exports = router;

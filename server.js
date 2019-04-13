@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
 
-const studentRequestController = require('./shutterRequestController')
+const studentRequestController = require('./shutterController')
 app.use('/',studentRequestController)
 
 app.use(express.static('public'))
