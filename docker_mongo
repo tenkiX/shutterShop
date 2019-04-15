@@ -1,0 +1,14 @@
+
+
+sudo docker ps
+
+sudo docker run -p 27017:27017 -v `pwd`/data:/data/db mongo
+
+sudo docker exec -it >>ps-el a neve<< bash
+
+mongo localhost/mydb
+
+
+db.requests.insert({"Name":"Jeno"})
+db.requests.find().pretty()
+
