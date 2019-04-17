@@ -7,6 +7,7 @@ import Manager from './components/pages/Manager';
 import axios from 'axios';
 
 import './App.css';
+import AddOrder from "./components/AddOrder";
 
 class App extends Component {
   state = {
@@ -20,6 +21,15 @@ class App extends Component {
         .then(res => this.setState({ orders: res.data }))
   }
 
+  // Add order
+  addOrder = (orderData) => {
+    console.log("before post" + orderData);
+  //  axios.post('http://localhost:8090/placeOrder', {
+  //    orderData
+  //  })
+  //      .then(res => this.setState({ orders: [...this.state.orders, res.data] }));
+    axios.post('http://localhost:8090/placeOrder', orderData).then(res => {alert("Order submitted");}).catch(e => {alert(e  + " fail.")});
+  };
 
   render() {
     console.log(this.state.orders);
@@ -30,6 +40,7 @@ class App extends Component {
             <Header />
             <Route exact path="/" render={props => (
                 <React.Fragment>
+                  <AddOrder addOrder={this.addOrder} />
                   <Orders orders={this.state.orders} />
 
                 </React.Fragment>
