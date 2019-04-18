@@ -4,28 +4,21 @@ export class AddOrder extends Component {
     state = {
         order: {
             customerId: "",
-            shutterType: "",
+            shutterType: "wooden",
             windowHeight: "",
             windowWidth:""
     }};
 
     onSubmit = (e) => {
         e.preventDefault();
-        let orderData = {
-            order: {
-            customerId: "3",
-            shutterType: "sfddsf",
-            windowHeight: "23",
-            windowWidth:"3232"
-            }};
-
-        this.setState({order: orderData});
-        console.log(this.state.order);
-        this.props.addOrder(this.state.order);
-
+        let orderData = this.state;
+        this.props.addOrder(orderData);
     };
 
-    onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+    onChange = (e) => {
+        e.persist();
+        this.setState(prevState => ({order: {...prevState.order, [e.target.name]: e.target.value}}));
+    };
 
     render() {
         return (
@@ -35,22 +28,22 @@ export class AddOrder extends Component {
                         <td>My user nickname:</td>
                         <td><input
                             type="text"
-                            name="userNickName"
+                            name="customerId"
                             style={{ flex: '10', padding: '5px' }}
                             placeholder="My super unique username..."
-                            value={this.state.order}
+
                             onChange={this.onChange}
                         /></td>
                     </tr>
                     <tr>
                         <td> Window size:</td>
-                        <td><input type="number" name="quantity" min="1"/>
+                        <td><input type="number" name="windowHeight" min="1" onChange={this.onChange}/>
                             X
-                            <input type="number" name="quantity" min="1"/> mm</td>
+                            <input type="number" name="windowWidth" min="1" onChange={this.onChange}/> mm</td>
                     </tr>
                     <tr>
-                        <td> Window type:</td>
-                        <td><select name="Select type">
+                        <td> Shutter type:</td>
+                        <td><select name="shutterType" onChange={this.onChange}>
                             <option value="wooden">Wooden</option>
                             <option value="steel">Steel</option>
                             <option value="plastic">Plastic</option>

@@ -5,7 +5,7 @@ function Header() {
   return (
     <header style={headerStyle}>
       <h1>ShutterShop eXtreme edition</h1>
-      <Link style={linkStyle} to="/">Customer</Link> | <Link style={linkStyle} to="/worker">Worker</Link> | <Link style={linkStyle} to="/manager">Manager</Link>
+      <Link style={linkStyle} to="/">Customer</Link> | <Link style={linkStyle} to="/shoppingCart">Shopping cart</Link> | <Link style={linkStyle} to="/worker">Worker</Link> | <Link style={linkStyle} to="/manager">Manager</Link>
     </header>
   )
 }
@@ -15,11 +15,11 @@ const headerStyle = {
   color: '#fff',
   textAlign: 'center',
   padding: '10px'
-}
+};
 
 const linkStyle = {
   color: '#fff',
   textDecoration: 'none'
-}
+};
 
 export default Header;

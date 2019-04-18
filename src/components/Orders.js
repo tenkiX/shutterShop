@@ -3,9 +3,12 @@ import OrderItem from './OrderItem';
 
 class Orders extends Component {
   render() {
-    return this.props.orders.map((order) => (
+    return (<div>Your orders:
+      {this.props.orders.map((order) => (
       <OrderItem key={order._id} order={order}/>
-    ));
+    ))}
+    </div>)
+
   }
 }
 
