@@ -12,33 +12,40 @@ import AddOrder from "./components/AddOrder";
 class App extends Component {
   state = {
     orders: [],
-    activeUser: "1"
+    activeUserId: ""
   };
 
+  changeUser= (userId) => {
+      this.setState({activeUserId:userId.activeUserId});
+  };
 
+    listCustomerOrders=(userId) =>{
 
-  componentDidMount() {
-    axios.get(`http://localhost:8090/listOrders/${this.state.activeUser}`)
-        .then(res => this.setState({ orders: res.data }))
+    axios.get(`http://localhost:8090/listOrders/${userId.activeUserId}`)
+    //  axios.get('http://localhost:8090/listOrders/' )
+             .then(res => this.setState({ orders: res.data }))
+             .catch(e => {alert(e  + " failed.")});
   };
 
   // Add order
   addOrder = (orderData) => {
     axios.post('http://localhost:8090/placeOrder', orderData)
-        .then(res => {alert("Order submitted"); this.componentDidMount()})
+        .then(res => {alert("Order submitted"); })
         .catch(e => {alert(e  + " order failed.")});
   };
 
 
   render() {
     return (
-      <Router>
+        <Router>
         <div className="App">
-          <div className="container">
-            <Header />
-            <Route exact path="/" render={props => (
+            <div className="container">
+                <Header changeUser = {this.changeUser} listCustomerOrders = {this.listCustomerOrders}/>
+
+
+            <Route path="/customerOrder" render={props => (
                 <React.Fragment>
-                  <AddOrder addOrder={this.addOrder} />
+                  <AddOrder addOrder={this.addOrder} activeUser = {this.state.activeUserId} />
                 </React.Fragment>
             )} />
             <Route path="/shoppingCart" render={props => (
@@ -48,9 +55,11 @@ class App extends Component {
             )} />
             <Route path="/worker" component={Worker} />
             <Route path="/manager" component={Manager} />
-          </div>  
+
+
+            </div>
         </div>
-      </Router>
+  </Router>
     );
   }
 }

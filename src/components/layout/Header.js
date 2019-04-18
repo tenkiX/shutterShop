@@ -1,25 +1,67 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 
-function Header() {
+import {LinkContainer } from 'react-router-bootstrap'
+
+export class Header extends Component{
+    state = {
+        activeUserId: "1"
+    };
+
+    onActiverUserChanged = (e) => {
+        e.preventDefault();
+        this.setState({ activeUserId: e.target.value });
+   };
+
+    onSubmit = (e) => {
+        e.preventDefault();
+        let activeUser = this.state;
+        this.props.changeUser(activeUser);
+    };
+
+    onListOrders = (e) => {
+        let activeUser = this.state;
+        this.props.listCustomerOrders(activeUser);
+    };
+
+    render() {
   return (
-    <header style={headerStyle}>
-      <h1>ShutterShop eXtreme edition</h1>
-      <Link style={linkStyle} to="/">Customer</Link> | <Link style={linkStyle} to="/shoppingCart">Shopping cart</Link> | <Link style={linkStyle} to="/worker">Worker</Link> | <Link style={linkStyle} to="/manager">Manager</Link>
-    </header>
+
+      <Navbar bg="light" expand="lg">
+        <Navbar.Brand href="/">ShutterShop eXtreme</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+           <NavDropdown title="Customer" id="basic-nav-dropdown">
+                  <LinkContainer to="/customerOrder">
+                        <NavDropdown.Item >Order shutters</NavDropdown.Item>
+                  </LinkContainer>
+              <NavDropdown.Divider />
+              <LinkContainer to="/shoppingCart" onClick={this.onListOrders.bind(this)}>
+                      <NavDropdown.Item > Shopping cart</NavDropdown.Item>
+              </LinkContainer>
+              </NavDropdown>
+              <LinkContainer to="/worker">
+              <Nav.Link href="/worker">Worker</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/manager">
+              <Nav.Link href="/manager">Manager</Nav.Link>
+              </LinkContainer>
+
+          </Nav>
+          <Form inline>
+            <FormControl type="text" placeholder="Enter your nickname here" className="mr-sm-2" onChange={this.onActiverUserChanged.bind(this)} />
+            <Button variant="outline-success" onClick={this.onSubmit.bind(this)}>Login</Button>
+          </Form>
+        </Navbar.Collapse>
+      </Navbar>
+
+
+
+
   )
-}
+}}
 
-const headerStyle = {
-  background: '#333',
-  color: '#fff',
-  textAlign: 'center',
-  padding: '10px'
-};
 
-const linkStyle = {
-  color: '#fff',
-  textDecoration: 'none'
-};
 
 export default Header;

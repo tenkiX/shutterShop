@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 
 export class AddOrder extends Component {
+
     state = {
-        order: {
-            customerId: "",
-            shutterType: "wooden",
-            windowHeight: "",
-            windowWidth:""
-    }};
+            activeUser: "",
+            order: {
+                customerId: "",
+                shutterType: "wooden",
+                windowHeight: "",
+                windowWidth:""
+            }};
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -17,25 +19,15 @@ export class AddOrder extends Component {
 
     onChange = (e) => {
         e.persist();
-        this.setState(prevState => ({order: {...prevState.order, [e.target.name]: e.target.value}}));
+
+        this.setState(prevState => ({order: {...prevState.order, customerId : [this.props.activeUser], [e.target.name]: e.target.value}}));
     };
 
     render() {
         return (
             <form onSubmit={this.onSubmit} style={{ display: 'flex' }}>
                 <table><tbody>
-                    <tr>
-                        <td>My user nickname:</td>
-                        <td><input
-                            type="text"
-                            name="customerId"
-                            style={{ flex: '10', padding: '5px' }}
-                            placeholder="My super unique username..."
-
-                            onChange={this.onChange}
-                        /></td>
-                    </tr>
-                    <tr>
+                     <tr>
                         <td> Window size:</td>
                         <td><input type="number" name="windowHeight" min="1" onChange={this.onChange}/>
                             X
