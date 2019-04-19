@@ -11,8 +11,8 @@ app.use(function(req, res, next) {
 
 app.use(bodyParser.json());
 
-const studentRequestController = require('./shutterController');
-app.use('/',studentRequestController);
+const orderController = require('./shutterController');
+app.use('/',orderController);
 
 app.use(express.static('public'));
 

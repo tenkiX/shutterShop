@@ -39,7 +39,7 @@ ShutterService.prototype.listOrdersByCustomerId = function(userId, callback){
 };
 
 
-ShutterService.prototype.submitRequest = function(request, success, error){
+ShutterService.prototype.submitOrder = function(request, success, error){
     request['date'] = new Date().toISOString();
     request['sign'] = new md5().update(JSON.stringify({
         order: request['order'],

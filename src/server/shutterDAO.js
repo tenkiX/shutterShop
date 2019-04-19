@@ -55,9 +55,38 @@ function createRequest(request,callback){
     })
 }
 
+function calculateRequiredMaterials(height,width){
+    return height*width;
+}
+
+function isOrderValid(req){
+    if(req['order'] === undefined){
+        //  res.status(411).send("Order must be defined");
+        return false;
+    }
+    if(req['order']['customerId'] === undefined || req['order']['customerId'] === ""){
+        //   res.status(412).send("Order-CustomerId must be defined");
+        return false;
+    }
+    if(req['order']['shutterType'] === undefined || req['order']['shutterType'] === ""){
+        //  res.status(413).send("Shutter type must be defined");
+        return false;
+    }
+    if(req['order']['windowHeight'] === undefined || req['order']['windowHeight'] === ""){
+        //  res.status(414).send("Window height must be defined");
+        return false;
+    }
+    if(req['order']['windowWidth'] === undefined || req['order']['windowWidth'] === ""){
+        //   res.status(415).send("window width must be defined");
+        return false;
+    }
+    return true;
+}
 
 module.exports = {
+    "isOrderValid" : isOrderValid,
     "createRequest" : createRequest,
     "listAllOrders" : readAllOrders,
-    "listOrdersByCustomerId" : readOrdersByCustomerId
-}
+    "listOrdersByCustomerId" : readOrdersByCustomerId,
+    "calculateRequiredMaterials" :calculateRequiredMaterials
+};
