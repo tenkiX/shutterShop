@@ -1,30 +1,49 @@
 import React, { Component } from 'react';
+import {Button} from "react-bootstrap";
 
 export class AddOrder extends Component {
 
     state = {
             activeUser: "",
-            order: {
-                customerId: "",
-                shutterType: "wooden",
-                windowHeight: "",
-                windowWidth:""
-            }};
+            addedOrderCounter: 0,
+            currentOrder: {
+                    shutterType: "wooden",
+                    windowHeight: "1564",
+                    windowWidth:"1",
+                    windowType:"basic",
+                    orderedPieces:"1",
+                    isJobFinished:"false"
+                },
+            order: []
+            };
 
     onSubmit = (e) => {
         e.preventDefault();
-        let orderData = this.state;
+        if (this.state.addedOrderCounter === 0) {alert('Please add at least 1 item to shopping cart before submitting'); return;}
+        let orderData = { order : {
+            customerId: [this.props.activeUser],
+            order: this.state.order
+        }};
         this.props.addOrder(orderData);
     };
 
     onChange = (e) => {
         e.persist();
-
-        this.setState(prevState => ({order: {...prevState.order, customerId : [this.props.activeUser], [e.target.name]: e.target.value}}));
+        this.setState(prevState => ({currentOrder: {...prevState.currentOrder, [e.target.name]: e.target.value}}));
     };
 
+    onAddWindow = (e) => {
+        e.persist();
+        this.setState({order: [...this.state.order, this.state.currentOrder]});
+        this.setState(({addedOrderCounter : this.state.addedOrderCounter +1}));
+        alert('Added your order to shopping cart');
+    };
+
+
+//átirni mindet bootstrapre
     render() {
-        return (
+        return (<div>  <Button variant="outline-success" onClick={this.onAddWindow}>Add to order</Button>
+
             <form onSubmit={this.onSubmit} style={{ display: 'flex' }}>
                 <table><tbody>
                      <tr>
@@ -41,7 +60,20 @@ export class AddOrder extends Component {
                             <option value="plastic">Plastic</option>
                         </select></td>
                     </tr>
+                     <tr>
+                         <td> Window type:</td>
+                         <td><select name="windowType" onChange={this.onChange}>
+                             <option value="openable">Openable</option>
+                             <option value="not openable">not openable</option>
+                             <option value="prison type">prison type</option>
+                         </select></td>
+                     </tr>
+                     <tr>
+                         <td> Ordered pieces:</td>
+                         <td><input type="number" name="orderedPieces" min="1" onChange={this.onChange}/> </td>
+                     </tr>
                     <tr>
+
                         <td><input
                             type="submit"
                             value="Submit"
@@ -51,6 +83,7 @@ export class AddOrder extends Component {
                     </tr></tbody>
                 </table>
          </form>
+            </div>
         )
     }
 }

@@ -68,18 +68,11 @@ function isOrderValid(req){
         //   res.status(412).send("Order-CustomerId must be defined");
         return false;
     }
-    if(req['order']['shutterType'] === undefined || req['order']['shutterType'] === ""){
+    if(req['order']['order'] === undefined || req['order']['order'] === ""){
         //  res.status(413).send("Shutter type must be defined");
         return false;
     }
-    if(req['order']['windowHeight'] === undefined || req['order']['windowHeight'] === ""){
-        //  res.status(414).send("Window height must be defined");
-        return false;
-    }
-    if(req['order']['windowWidth'] === undefined || req['order']['windowWidth'] === ""){
-        //   res.status(415).send("window width must be defined");
-        return false;
-    }
+
     return true;
 }
 
