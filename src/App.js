@@ -19,15 +19,12 @@ class App extends Component {
       this.setState({activeUserId:userId.activeUserId});
   };
 
-    listCustomerOrders=(userId) =>{
-
+  listCustomerOrders=(userId) =>{
     axios.get(`http://localhost:8090/listOrders/${userId.activeUserId}`)
-    //  axios.get('http://localhost:8090/listOrders/' )
              .then(res => this.setState({ orders: res.data }))
              .catch(e => {alert(e  + " failed.")});
   };
 
-  // Add order
   addOrder = (orderData) => {
     axios.post('http://localhost:8090/placeOrder', orderData)
         .then(res => {alert("Order submitted"); })
@@ -48,7 +45,7 @@ class App extends Component {
                   <AddOrder addOrder={this.addOrder} activeUser = {this.state.activeUserId} />
                 </React.Fragment>
             )} />
-            <Route path="/shoppingCart" render={props => (
+            <Route path="/customerOrderList" render={props => (
                 <React.Fragment>
                   <Orders orders={this.state.orders} />
                 </React.Fragment>

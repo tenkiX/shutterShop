@@ -7,8 +7,14 @@ sudo docker run -p 27017:27017 -v `pwd`/data:/data/db mongo
 sudo docker exec -it >>ps-el a neve<< bash
 
 mongo localhost/mydb
+helyett mongo shuttershop
+
+db.orders.find().pretty()
 
 
-db.requests.insert({"Name":"Jeno"})
-db.requests.find().pretty()
 
+db.adminCommand( { listDatabases: 1 } )
+use [database];
+use [shuttershop];
+
+db.dropDatabase();

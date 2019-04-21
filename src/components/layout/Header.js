@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
+import { Nav, Navbar, NavDropdown, FormControl, Button } from 'react-bootstrap';
 
 import {LinkContainer } from 'react-router-bootstrap'
 
@@ -28,7 +28,7 @@ export class Header extends Component{
   return (
 
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">ShutterShop eXtreme</Navbar.Brand>
+        <Navbar.Brand>ShutterShop eXtreme</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
@@ -37,8 +37,8 @@ export class Header extends Component{
                         <NavDropdown.Item >Order shutters</NavDropdown.Item>
                   </LinkContainer>
               <NavDropdown.Divider />
-              <LinkContainer to="/shoppingCart" onClick={this.onListOrders.bind(this)}>
-                      <NavDropdown.Item > Shopping cart</NavDropdown.Item>
+              <LinkContainer to="/customerOrderList" onClick={this.onListOrders.bind(this)}>
+                      <NavDropdown.Item >My orders</NavDropdown.Item>
               </LinkContainer>
               </NavDropdown>
               <LinkContainer to="/worker">
@@ -49,16 +49,12 @@ export class Header extends Component{
               </LinkContainer>
 
           </Nav>
-          <Form inline>
-            <FormControl type="text" placeholder="Enter your nickname here" className="mr-sm-2" onChange={this.onActiverUserChanged.bind(this)} />
+
+            <FormControl required type="text" placeholder="Enter your nickname here" className="mr-sm-2" onChange={this.onActiverUserChanged.bind(this)} />
             <Button variant="outline-success" onClick={this.onSubmit.bind(this)}>Login</Button>
-          </Form>
+
         </Navbar.Collapse>
       </Navbar>
-
-
-
-
   )
 }}
 

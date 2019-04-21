@@ -13,7 +13,7 @@ router.get('/listOrders/:customerId',(req,res) =>{
 })});
 
 //mindet
-router.get('/listOrders',(req,res) =>{
+router.get('/listOrders/listAllOrders',(req,res) =>{
     shutterService.listAllOrders((requests) =>{
         res.status(200).send(requests)
 })});

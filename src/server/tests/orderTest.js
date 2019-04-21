@@ -13,20 +13,73 @@ describe('Testing acceptable order format', function(){
     it('check if good request is accepted',function(){
         var order = {order: {
             customerId: "2",
-                shutterType: "wooden",
-                windowHeight: "10",
-                windowWidth:"10"
+            order: [{
+                    shutterType: "wooden",
+                    windowHeight: "1564",
+                    windowWidth:"1",
+                    windowType:"basic",
+                    orderedPieces:"1",
+                    isJobFinished:"false"
+                },
+                {
+                    shutterType: "wooden2",
+                    windowHeight: "1",
+                    windowWidth:"1",
+                    windowType:"nuub",
+                    orderedPieces:"1",
+                    isJobFinished:"false"
+                }],
         }};
         assert.strictEqual(shutterDAO.isOrderValid(order),true)
     })
 });
 
 
-describe('Testing unacceptable order format', function(){
+describe('Testing unacceptable order format (missing orderitems)', function(){
     it('check if bad request is denied',function(){
         var order = {order: {
-                shutterType: "i am evil",
-                windowWidth:"some parts are undefined"
+                customerId: "2",
+                order: [{
+                    shutterType: "",
+                    windowHeight: "1564",
+                    windowWidth:"1",
+                    windowType:"basic",
+                    orderedPieces:"1",
+                    isJobFinished:"false"
+                },
+                    {
+                        shutterType: "wooden2",
+                        windowHeight: "1",
+                        windowWidth:"",
+                        windowType:"nuub",
+                        orderedPieces:"1",
+                        isJobFinished:"false"
+                    }],
+            }};
+        assert.strictEqual(shutterDAO.isOrderValid(order),false)
+    })
+});
+
+
+describe('Testing unacceptable order format (missing customerId)', function(){
+    it('check if bad request is denied',function(){
+        var order = {order: {
+                order: [{
+                    shutterType: "",
+                    windowHeight: "1564",
+                    windowWidth:"1",
+                    windowType:"basic",
+                    orderedPieces:"1",
+                    isJobFinished:"false"
+                },
+                    {
+                        shutterType: "wooden2",
+                        windowHeight: "1",
+                        windowWidth:"",
+                        windowType:"nuub",
+                        orderedPieces:"1",
+                        isJobFinished:"false"
+                    }],
             }};
         assert.strictEqual(shutterDAO.isOrderValid(order),false)
     })

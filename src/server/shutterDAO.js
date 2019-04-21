@@ -60,18 +60,31 @@ function calculateRequiredMaterials(height,width){
 }
 
 function isOrderValid(req){
-    if(req['order'] === undefined){
-        //  res.status(411).send("Order must be defined");
+    var test = JSON.stringify(req);
+    var obj = JSON.parse(test);
+    var testVal = obj.order;
+
+    if(testVal === undefined){
+        console.log("request body is missing");
         return false;
     }
-    if(req['order']['customerId'] === undefined || req['order']['customerId'] === ""){
-        //   res.status(412).send("Order-CustomerId must be defined");
+    if(testVal.customerId === undefined || testVal.customerId === ""){
+        console.log("customerId not defined");
         return false;
     }
-    if(req['order']['order'] === undefined || req['order']['order'] === ""){
-        //  res.status(413).send("Shutter type must be defined");
-        return false;
+
+    for (var i = 0; i < testVal.order.length; i++) {
+        if(testVal.order[i].shutterType === undefined || testVal.order[i].shutterType === ""
+            || testVal.order[i].windowHeight === undefined || testVal.order[i].windowHeight === ""
+            || testVal.order[i].windowWidth === undefined || testVal.order[i].windowWidth === ""
+            || testVal.order[i].windowType === undefined || testVal.order[i].windowType === ""
+            || testVal.order[i].orderedPieces === undefined || testVal.order[i].orderedPieces === ""
+            || testVal.order[i].isJobFinished !== 'false' ){
+            console.log("order is not correctly defined");
+            return false;
+        }
     }
+
 
     return true;
 }
