@@ -47,7 +47,7 @@ class App extends Component {
             )} />
             <Route path="/customerOrderList" render={props => (
                 <React.Fragment>
-                  <Orders orders={this.state.orders} />
+                    <Orders orders={this.state.orders} />
                 </React.Fragment>
             )} />
             <Route path="/worker" component={Worker} />

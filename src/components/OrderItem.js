@@ -1,14 +1,31 @@
 import React, { Component } from 'react';
+import uuid from "uuid";
 
 class OrderItem extends Component {
+
     render() {
-        return  (
-             <div>
-                {this.props.order.order.customerId}
-                <pre>{JSON.stringify(this.props.order.order, null, 2)}</pre>
-            </div>
-        );
+        var renderThis;
+        try {
+            renderThis=this.props.order.order.order;
+        }catch (e) {
+           // alert("catch");
+        }
+
+        return  renderThis.map(orders => (
+            <tr key={uuid.v4()}>
+                <td>{orders.shutterType}</td>
+                <td>{orders.windowType}</td>
+                <td>{orders.windowWidth}</td>
+                <td>{orders.windowHeight}</td>
+                <td>{orders.isJobFinished}</td>
+            </tr>
+        ));
+
     }
 }
 
+
+
+
 export default OrderItem;
+
