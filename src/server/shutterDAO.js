@@ -18,7 +18,6 @@ function readOrders(findParams, callback){
     var client = new MongoClient(url);
     client.connect((err)=>{
         assert.equal(null, err);
-        //console.log("Connected successfully to server");
 
         const db = client.db(dbName);
         const collection= db.collection(collectionName);
@@ -43,17 +42,13 @@ function updateJobStatus(orderid,index,callback){
         const collection= db.collection(collectionName);
         const query =   { _id: ObjectId(orderid) };
         const setter = {["order.order."+index+".isJobFinished"]:"true"};
-        console.log(query);
-        console.log(setter);
-        collection.updateOne(query,{$set:setter}, function(err, res) {
+        collection.updateOne(query,{$set:setter}, (err,r)=> {
                 if (err) console.log(err);
-                console.log("1 document updated");
+            callback();
             client.close();
             });
     })
 }
-//{ "_id": ObjectId(document_id) },
-//{ "$set": { 'documents.'+str(doc_index)+'.content' : new_content_B}}
 
 function readOrdersByCustomerId(customerId,callback){
     readOrders({"order.customerId" : customerId},(result) => {callback(result)})
@@ -63,7 +58,6 @@ function createRequest(request,callback){
     var client = new MongoClient(url);
     client.connect((err)=>{
         assert.equal(null, err);
-        //console.log("Connected successfully to server");
 
         const db = client.db(dbName);
         const collection= db.collection(collectionName);
@@ -79,8 +73,10 @@ function createRequest(request,callback){
 
 
 
-function calculateRequiredMaterials(height,width){
-    return height*width;
+function calculateRequiredMaterials(shutterType, windowWidth, windowHeight,callback){
+
+    var materials = {"material" : shutterType.toLowerCase(),"noOfStaves" : Math.ceil(windowHeight/18), "ofWidth" :  Math.ceil(windowWidth*1.05), "ofLength" :  Math.ceil(windowHeight/11), "fixtures":  Math.ceil(windowHeight/100)};
+    callback(materials);
 }
 
 function isOrderValid(req){
@@ -122,6 +118,6 @@ module.exports = {
     "createRequest" : createRequest,
     "listAllOrders" : readAllOrders,
     "listOrdersByCustomerId" : readOrdersByCustomerId,
-    "calculateRequiredMaterials" :calculateRequiredMaterials,
-    "finishJob" : updateJobStatus
+    "finishJob" : updateJobStatus,
+    "getRequiredMaterials" : calculateRequiredMaterials
 };

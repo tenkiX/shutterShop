@@ -37,9 +37,17 @@ ShutterService.prototype.listOrdersByCustomerId = function(userId, callback){
     })
 };
 
-ShutterService.prototype.finishJob = function(orderId, index){
+ShutterService.prototype.finishJob = function(orderId, index, success){
 
-    this.shutterDAO.finishJob(orderId, index)
+    this.shutterDAO.finishJob(orderId, index, ()=>{success()})
+};
+
+ShutterService.prototype.getRequiredMaterials = function(shutterType, windowWidth, windowHeight, callback){
+
+    this.shutterDAO.getRequiredMaterials(shutterType, windowWidth, windowHeight, (requests) => {
+        logger.info(`${requests.length} materials were found!`);
+        callback(requests)
+    })
 };
 
 
