@@ -4,4 +4,4 @@ package-lock.json
 .sass-cache/
 error.log
 combined.log
-
+data/

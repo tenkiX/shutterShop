@@ -1,4 +1,6 @@
 /* MongoDB Related Code */
+var ObjectId = require('mongodb').ObjectId;
+
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
@@ -33,6 +35,26 @@ function readAllOrders(callback){
     readOrders({},(result) => {callback(result)})
 }
 
+function updateJobStatus(orderid,index,callback){
+    var client = new MongoClient(url);
+    client.connect((err)=>{
+        assert.equal(null, err);
+        const db = client.db(dbName);
+        const collection= db.collection(collectionName);
+        const query =   { _id: ObjectId(orderid) };
+        const setter = {["order.order."+index+".isJobFinished"]:"true"};
+        console.log(query);
+        console.log(setter);
+        collection.updateOne(query,{$set:setter}, function(err, res) {
+                if (err) console.log(err);
+                console.log("1 document updated");
+            client.close();
+            });
+    })
+}
+//{ "_id": ObjectId(document_id) },
+//{ "$set": { 'documents.'+str(doc_index)+'.content' : new_content_B}}
+
 function readOrdersByCustomerId(customerId,callback){
     readOrders({"order.customerId" : customerId},(result) => {callback(result)})
 }
@@ -55,6 +77,8 @@ function createRequest(request,callback){
     })
 }
 
+
+
 function calculateRequiredMaterials(height,width){
     return height*width;
 }
@@ -70,6 +94,10 @@ function isOrderValid(req){
     }
     if(testVal.customerId === undefined || testVal.customerId === ""){
         console.log("customerId not defined");
+        return false;
+    }
+    if(testVal.contactEmail === undefined || testVal.contactEmail === "" || testVal.address === undefined || testVal.address === "") {
+        console.log("customer contact data not defined");
         return false;
     }
 
@@ -94,5 +122,6 @@ module.exports = {
     "createRequest" : createRequest,
     "listAllOrders" : readAllOrders,
     "listOrdersByCustomerId" : readOrdersByCustomerId,
-    "calculateRequiredMaterials" :calculateRequiredMaterials
+    "calculateRequiredMaterials" :calculateRequiredMaterials,
+    "finishJob" : updateJobStatus
 };

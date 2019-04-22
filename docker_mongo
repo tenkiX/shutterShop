@@ -6,15 +6,14 @@ sudo docker run -p 27017:27017 -v `pwd`/data:/data/db mongo
 
 sudo docker exec -it >>ps-el a neve<< bash
 
-mongo localhost/mydb
-helyett mongo shuttershop
+mongo shuttershop
 
+show dbs
+use shuttershop
+show collections
 db.orders.find().pretty()
 
-
-
-db.adminCommand( { listDatabases: 1 } )
-use [database];
-use [shuttershop];
-
 db.dropDatabase();
+
+db.orders.updateOne({"_id":ObjectId("5cbd90750c4cb91ed407f5e0")},{$set: {"order.order.1.isJobFinished":"true"}})
+

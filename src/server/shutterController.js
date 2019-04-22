@@ -13,7 +13,7 @@ router.get('/listOrders/:customerId',(req,res) =>{
 })});
 
 //mindet
-router.get('/listOrders/listAllOrders',(req,res) =>{
+router.get('/listAllOrders',(req,res) =>{
     shutterService.listAllOrders((requests) =>{
         res.status(200).send(requests)
 })});
@@ -28,7 +28,10 @@ router.post('/placeOrder', (req,res) =>{
         )
 });
 
+router.post('/finishJob/:jobId/:index', (req,res) =>{
 
+    shutterService.finishJob(req.params.jobId,req.params.index)
+});
 
 
 module.exports = router;

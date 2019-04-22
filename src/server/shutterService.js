@@ -31,11 +31,15 @@ ShutterService.prototype.listAllOrders = function(callback){
 
 
 ShutterService.prototype.listOrdersByCustomerId = function(userId, callback){
-    console.log("service passed");
     this.shutterDAO.listOrdersByCustomerId(userId, (requests) =>{
         logger.info(`${requests.length} orders were found!`);
         callback(requests)
     })
+};
+
+ShutterService.prototype.finishJob = function(orderId, index){
+
+    this.shutterDAO.finishJob(orderId, index)
 };
 
 

@@ -25,6 +25,8 @@ class App extends Component {
              .catch(e => {alert(e  + " failed.")});
   };
 
+
+
   addOrder = (orderData) => {
     axios.post('http://localhost:8090/placeOrder', orderData)
         .then(res => {alert("Order submitted"); })
@@ -37,7 +39,7 @@ class App extends Component {
         <Router>
         <div className="App">
             <div className="container">
-                <Header changeUser = {this.changeUser} listCustomerOrders = {this.listCustomerOrders}/>
+                <Header changeUser = {this.changeUser} listCustomerOrders = {this.listCustomerOrders} />
 
 
             <Route path="/customerOrder" render={props => (
@@ -50,7 +52,11 @@ class App extends Component {
                     <Orders orders={this.state.orders} />
                 </React.Fragment>
             )} />
-            <Route path="/worker" component={Worker} />
+            <Route path="/worker" render={props => (
+                <React.Fragment>
+                    <Worker/>
+                </React.Fragment>
+            )} />
             <Route path="/manager" component={Manager} />
 
 

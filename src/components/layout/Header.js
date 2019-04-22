@@ -24,6 +24,7 @@ export class Header extends Component{
         this.props.listCustomerOrders(activeUser);
     };
 
+
     render() {
   return (
 
@@ -41,7 +42,7 @@ export class Header extends Component{
                       <NavDropdown.Item >My orders</NavDropdown.Item>
               </LinkContainer>
               </NavDropdown>
-              <LinkContainer to="/worker">
+              <LinkContainer to="/worker" >
               <Nav.Link href="/worker">Worker</Nav.Link>
               </LinkContainer>
               <LinkContainer to="/manager">
