@@ -45,9 +45,15 @@ export class Header extends Component{
               <LinkContainer to="/worker" >
               <Nav.Link href="/worker">Worker</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/manager">
-              <Nav.Link href="/manager">Manager</Nav.Link>
-              </LinkContainer>
+              <NavDropdown title="Manager" id="basic-nav-dropdown">
+                  <LinkContainer to="/manager">
+                      <NavDropdown.Item>Manage orders</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Divider />
+                  <LinkContainer to="/managerStatistics">
+                      <NavDropdown.Item>Check statistics</NavDropdown.Item>
+                  </LinkContainer>
+              </NavDropdown>
 
           </Nav>
 

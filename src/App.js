@@ -8,6 +8,7 @@ import axios from 'axios';
 
 import './App.css';
 import AddOrder from "./components/AddOrder";
+import ManagerStatistics from "./components/ManagerStatistics";
 
 class App extends Component {
   state = {
@@ -57,8 +58,16 @@ class App extends Component {
                     <Worker/>
                 </React.Fragment>
             )} />
-            <Route path="/manager" component={Manager} />
-
+            <Route path="/managerStatistics" render={props => (
+                <React.Fragment>
+                    <ManagerStatistics/>
+                </React.Fragment>
+            )} />
+            <Route path="/manager" render={props => (
+                <React.Fragment>
+                    <Manager/>
+                </React.Fragment>
+            )} />
 
             </div>
         </div>
