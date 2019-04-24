@@ -29,6 +29,11 @@ ShutterService.prototype.listAllOrders = function(callback){
     })
 };
 
+ShutterService.prototype.getStatistics = function(shutterType, callback){
+    this.shutterDAO.getStatistics(shutterType,(requests) => {
+        callback(requests)
+    })
+};
 
 ShutterService.prototype.listOrdersByCustomerId = function(userId, callback){
     this.shutterDAO.listOrdersByCustomerId(userId, (requests) =>{

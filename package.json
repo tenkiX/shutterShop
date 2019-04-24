@@ -20,7 +20,8 @@
     "mocha": "^6.0.2",
     "chai": "^4.2.0",
     "uuid": "^3.3.2",
-    "@react-pdf/renderer": "^1.5.4"
+    "@react-pdf/renderer": "^1.5.4",
+    "react-minimal-pie-chart": "^4.0.0"
   },
   "scripts": {
     "test": "mocha ./src/server/tests",

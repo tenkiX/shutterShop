@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import Table from "react-bootstrap/Table";
 import axios from "axios";
-
+import PieChart from 'react-minimal-pie-chart';
 
 class ManagerStatistics extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            orders: null
+            steelNumber: 0,
+            plasticNumber: 0,
+            woodenNumber: 0
         };
     }
     componentWillMount() {
@@ -15,8 +16,16 @@ class ManagerStatistics extends Component {
     }
     loadData() {
 
-        axios.get(`http://localhost:8090/listAllOrders`)
-            .then(res => this.setState({ orders: res.data }))
+        axios.get(`http://localhost:8090/statistics/Steel`)
+            .then(res => {this.setState({ steelNumber: res.data })})
+            .catch(e => {alert(e  + " failed.")});
+
+        axios.get(`http://localhost:8090/statistics/Plastic`)
+            .then(res => {this.setState({ plasticNumber: res.data })})
+            .catch(e => {alert(e  + " failed.")});
+
+        axios.get(`http://localhost:8090/statistics/Wooden`)
+            .then(res => {this.setState({ woodenNumber: res.data })})
             .catch(e => {alert(e  + " failed.")});
     };
 
@@ -24,28 +33,16 @@ class ManagerStatistics extends Component {
 
 
     render() {
-        if (!this.state.orders) {
-            return <div />
-        }
-
-        //van data már
         return (
             <div>
-                <Table striped bordered hover>
-                    <thead>
-                    <tr>
-                        <th>Type of shutter</th>
-                        <th>Type of window</th>
-                        <th>Width</th>
-                        <th>Height</th>
-                        <th>List of required materials</th>
-                        <th>Is it assembled?</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </Table>
+                <p> Popularity of shutter types among our buyers </p>
+                <PieChart animate={true} animationDuration={500}
+                    data={[
+                        { title: 'Steel', value: this.state.steelNumber, color: '#E38627' },
+                        { title: 'Plastic', value: this.state.plasticNumber, color: '#C13C37' },
+                        { title: 'Wooden', value: this.state.woodenNumber, color: '#6A2135' },
+                    ]}
+                />;
             </div>
         );
     }

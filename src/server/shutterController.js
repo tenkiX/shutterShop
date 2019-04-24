@@ -18,6 +18,12 @@ router.get('/listAllOrders',(req,res) =>{
         res.status(200).send(requests)
 })});
 
+//stats
+router.get('/statistics/:shutterType',(req,res) =>{
+    shutterService.getStatistics(req.params.shutterType, (requests) =>{
+        res.status(200).send(requests.toString())
+    })});
+
 router.get('/getRequiredMaterials/:shutterType/:windowWidth/:windowHeight',(req,res) =>{
     shutterService.getRequiredMaterials(req.params.shutterType,req.params.windowWidth,req.params.windowHeight,(requests) =>{
         res.status(200).send(requests)

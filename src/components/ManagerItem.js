@@ -24,7 +24,7 @@ class ManagerItem extends Component {
                     <Document>
                         <Page size="A4">
                             <View>
-                               <Text>~~ ShutterShop eXtreme invoice ~~</Text>
+                               <Text>~~ ShutterShop eXtreme minimalistic style invoice ~~</Text>
                                <Text> For customer: {this.props.order.order.customerId}</Text>
                               {this.props.order.order.order.map((order) => (
                                <Text>{order.shutterType} x {order.orderedPieces}</Text>

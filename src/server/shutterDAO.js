@@ -54,6 +54,25 @@ function readOrdersByCustomerId(customerId,callback){
     readOrders({"order.customerId" : customerId},(result) => {callback(result)})
 }
 
+function getStatistics(shutterType,callback){
+    getNumOfDocs({"order.order.shutterType" : shutterType},(err, result) => {callback(result)})
+}
+
+function getNumOfDocs ( findParams, callback) {
+    var client = new MongoClient(url);
+    client.connect((err)=>{
+        assert.equal(null, err);
+        const db = client.db(dbName);
+        const collection= db.collection(collectionName);
+
+        collection.count(findParams, function(error, numOfDocs){
+            if(error) return callback(error);
+            client.close();
+            callback(null, numOfDocs);
+        });
+    });
+}
+
 function createRequest(request,callback){
     var client = new MongoClient(url);
     client.connect((err)=>{
@@ -119,5 +138,6 @@ module.exports = {
     "listAllOrders" : readAllOrders,
     "listOrdersByCustomerId" : readOrdersByCustomerId,
     "finishJob" : updateJobStatus,
-    "getRequiredMaterials" : calculateRequiredMaterials
+    "getRequiredMaterials" : calculateRequiredMaterials,
+    "getStatistics" : getStatistics
 };
