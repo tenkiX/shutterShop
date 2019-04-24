@@ -96,6 +96,7 @@ function calculateRequiredMaterials(shutterType, windowWidth, windowHeight,callb
 
     var materials = {"material" : shutterType.toLowerCase(),"noOfStaves" : Math.ceil(windowHeight/18), "ofWidth" :  Math.ceil(windowWidth*1.05), "ofLength" :  Math.ceil(windowHeight/11), "fixtures":  Math.ceil(windowHeight/100)};
     callback(materials);
+    return materials; //for tests
 }
 
 function isOrderValid(req){

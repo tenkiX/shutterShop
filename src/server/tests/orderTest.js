@@ -4,8 +4,9 @@ var shutterDAO = require('../shutterDAO');
 
 
 describe('Required material calculation test', function(){
-    it('check if required mats for a 200x200 window = 40000',function(){
-        assert.strictEqual(shutterDAO.calculateRequiredMaterials(200,200),40000)
+    it('validating with precalculated data',function(){
+        assert.deepStrictEqual(shutterDAO.getRequiredMaterials("Steel", "100", "100",callback=>{}),
+            {"material" : "steel", "noOfStaves" : 6, "ofWidth" :  105, "ofLength" :  10, "fixtures":  1})
     })
 });
 
@@ -13,6 +14,8 @@ describe('Testing acceptable order format', function(){
     it('check if good request is accepted',function(){
         var order = {order: {
             customerId: "2",
+            contactEmail:"yolo",
+            address:"swag",
             order: [{
                     shutterType: "wooden",
                     windowHeight: "1564",
@@ -39,6 +42,8 @@ describe('Testing unacceptable order format (missing orderitems)', function(){
     it('check if bad request is denied',function(){
         var order = {order: {
                 customerId: "2",
+                contactEmail:"yolo",
+                address:"swag",
                 order: [{
                     shutterType: "",
                     windowHeight: "1564",
@@ -64,6 +69,8 @@ describe('Testing unacceptable order format (missing orderitems)', function(){
 describe('Testing unacceptable order format (missing customerId)', function(){
     it('check if bad request is denied',function(){
         var order = {order: {
+                contactEmail:"yolo",
+                address:"swag",
                 order: [{
                     shutterType: "",
                     windowHeight: "1564",
