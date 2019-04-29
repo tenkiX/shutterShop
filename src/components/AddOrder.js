@@ -75,9 +75,9 @@ export class AddOrder extends Component {
     render() {
         return ( <div>
 
-            <Form  id = "orderForm" onSubmit={e => this.handleSubmit(e)} style={this.state.showFinalizeForm ? {display: 'none'} : {  }}>
+               <Form  id = "orderForm" onSubmit={e => this.handleSubmit(e)} style={this.state.showFinalizeForm ? {display: 'none'} : {  }}>
                 <Form.Row>
-                    <Form.Group controlId="windowType">
+                    <Form.Group as={Col} controlId="windowType">
                         <Form.Label>Select window type:</Form.Label>
                         <Form.Control required name="windowType" as="select" onChange={this.onChange}>
                             <option>Simple</option>
@@ -85,6 +85,7 @@ export class AddOrder extends Component {
                             <option>Awning</option>
                         </Form.Control>
                     </Form.Group>
+                    <Form.Group as={Col}/>
                 </Form.Row>
 
                 <Form.Row>
@@ -99,7 +100,7 @@ export class AddOrder extends Component {
                 </Form.Row>
 
                 <Form.Row>
-                    <Form.Group controlId="shutterType">
+                    <Form.Group as={Col} controlId="shutterType">
                         <Form.Label>Select shutter type:</Form.Label>
                         <Form.Control required name="shutterType" as="select" onChange={this.onChange}>
                             <option>Plastic</option>
@@ -107,14 +108,15 @@ export class AddOrder extends Component {
                             <option>Wooden</option>
                         </Form.Control>
                     </Form.Group>
+                    <Form.Group as={Col}/>
                 </Form.Row>
 
                 <Form.Row>
-                    <Form.Group controlId="orderedPieces">
+                    <Form.Group as={Col} controlId="orderedPieces">
                         <Form.Label>How many pieces would you like to order?</Form.Label>
                         <Form.Control required name="orderedPieces" type="number" onChange={this.onChange}/>
                     </Form.Group>
-
+                    <Form.Group as={Col}/>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group as={Col} controlId="btn">
